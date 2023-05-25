@@ -1,6 +1,7 @@
 const { response} = require('express');
 const Article = require('../models/articles')
-
+const nodeMailer = require('nodemailer');
+const fdpf = require('node-fpdf')
 
 const getArticles = async (req, res = response) => {
     const articles = await Article.find()
@@ -94,6 +95,49 @@ const updateArticle = async(req, res = response) => {
         })
     }
 }
+const sendEmail = async(req, resp = response ) =>   {
+    
+    const articles = await Article.find()
+                .populate('company','name')
+
+    const email = req.params.email;
+
+    let body = req.body;
+    let config = nodeMailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth : {
+            user: 'manriquebraian17@gmail.com',
+            pass: 'bvtbqozxszbomchw'
+        },
+        html: `<h1>Hello world</h1>`
+    });
+    const options = {
+        from: 'Admin',
+        subject: 'Stock',
+        to: 'braian_manrique@hotmail.com',
+        text: 's',
+        html: `<h1>Stocks</h1>`,
+        // attachments:[
+        //     {
+        //         filename: 'stock'
+        //     }
+
+        // ]
+    }
+    
+    config.sendMail(options, function(error, result){
+        if( error) { 
+            console.log(error)
+            return resp.json({ok:false , msg: error})}
+        
+        return resp.json({
+            ok: true,
+            msg: result
+        })
+    })
+
+}
 
 const deleteArticle = async(req, res = response) => {
     const id = req.params.id;
@@ -122,5 +166,5 @@ const deleteArticle = async(req, res = response) => {
     }    
 }
 module.exports = {
-    getArticles, createArticle, deleteArticle, updateArticle, getArticleById
+    getArticles, createArticle, deleteArticle, updateArticle, getArticleById,sendEmail
 }

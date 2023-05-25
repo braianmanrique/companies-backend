@@ -4,7 +4,7 @@ const {getUsers, createUser, updateUser, deleteUser } = require('../controllers/
 
 const router = Router();
 const {validateFields} = require('../middlewares/validate_field');
-const { validateJWT } = require('../middlewares/validate_jwt');
+const { validateJWT, validateADMIN_ROLE, validateADMIN_ROLEMYUSER } = require('../middlewares/validate_jwt');
 
 
 router.get('/', validateJWT,  getUsers);
@@ -13,6 +13,7 @@ router.delete('/:id',validateJWT , deleteUser);
 router.put('/:id' ,
   [
     validateJWT,
+    validateADMIN_ROLEMYUSER,
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'email is requireed').isEmail(),
     validateFields

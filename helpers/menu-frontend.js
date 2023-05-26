@@ -14,7 +14,7 @@
           icon: 'mdi mdi-folder-lock-open',
           submenu: [
             // {title: 'Users', url: 'users'},
-            // {title: 'Articles', url: 'articles'}
+            {title: 'Stock', url: 'articles'},
             {title: 'Companies', url: 'companies'},
             
           ]
@@ -22,7 +22,7 @@
     ];
     if(role === 'ADMIN_ROLE'){
         menu[1].submenu.unshift( {title: 'Users', url: 'users'},);
-        menu[1].submenu.unshift( {title: 'Stock', url: 'articles'},)
+        // menu[1].submenu.unshift( {title: 'Stock', url: 'articles'},)
     }
     return menu;
       

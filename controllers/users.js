@@ -62,13 +62,7 @@ const createUser = async(req, res= response) => {
             msg: 'Error review  logs...'
         })
     }
-    // const user = new User(req.body);
-    // await user.save();
-
-    // res.json({
-    //     ok: true,
-    //     msg: user
-    // });
+  
 }
 
 const updateUser = async(req, res = response) => {
